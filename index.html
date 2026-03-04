@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Dia das Mulheres 💜</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;500;600&display=swap');
+        
+        body {
+            font-family: 'Poppins', system_ui, sans-serif;
+        }
+        .title-font {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .hero-bg {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), 
+                             url('https://images.unsplash.com/photo-1524504388940-b1c1722653e1?ixlib=rb-4.0.3&auto=format&fit=crop&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+        
+        .message-card {
+            background: linear-gradient(135deg, #f3e8ff, #fae8e8);
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            animation: fall linear forwards;
+        }
+        
+        @keyframes fall {
+            to {
+                transform: translateY(800px) rotate(720deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-purple-50 via-pink-50 to-rose-50 text-gray-800 overflow-x-hidden">
+    <!-- Navbar -->
+    <nav class="bg-white/80 backdrop-blur-md border-b border-purple-200 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <i class="fa-solid fa-heart text-3xl text-pink-500"></i>
+                <h1 class="text-2xl font-bold title-font text-purple-700 tracking-tight">Dia das Mulheres</h1>
+            </div>
+            <div class="hidden md:flex gap-8 text-sm font-medium">
+                <a href="#mensagem-auto" class="hover:text-pink-600 transition-colors">Mensagem Automática</a>
+                <a href="#mensagem-personalizada" class="hover:text-pink-600 transition-colors">Mensagem Personalizada</a>
+                <a href="#musica" class="hover:text-pink-600 transition-colors">Música Especial</a>
+            </div>
+            <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" 
+                    class="px-5 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-full text-sm font-medium flex items-center gap-2 transition-all">
+                <i class="fa-solid fa-house"></i>
+                <span>Início</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero-bg h-screen flex items-center relative">
+        <div class="max-w-4xl mx-auto px-6 text-center text-white z-10">
+            <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-6 py-2 rounded-full mb-6">
+                <span class="text-4xl">🌸</span>
+                <span class="text-xl font-medium tracking-widest">8 DE MARÇO • 2026</span>
+            </div>
+            
+            <h1 class="text-6xl md:text-7xl title-font font-bold leading-tight mb-4">
+                Feliz Dia<br>Internacional<br>da Mulher
+            </h1>
+            <p class="text-xl md:text-2xl max-w-lg mx-auto mb-10 text-white/90">
+                Uma homenagem linda para aquela mulher que ilumina o seu mundo
+            </p>
+            
+            <!-- Nome Input -->
+            <div class="max-w-md mx-auto">
+                <div class="bg-white/95 backdrop-blur-md rounded-3xl p-2 shadow-2xl">
+                    <div class="flex flex-col md:flex-row gap-3">
+                        <input id="nome-input" 
+                               type="text" 
+                               placeholder="Digite o nome dela aqui..." 
+                               class="flex-1 px-8 py-6 bg-transparent text-gray-800 text-xl placeholder:text-gray-400 focus:outline-none font-medium rounded-3xl">
+                        <button onclick="salvarNome()" 
+                                class="px-10 py-6 bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white rounded-3xl font-semibold flex items-center gap-3 text-lg transition-all active:scale-95">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            <span>Personalizar</span>
+                        </button>
+                    </div>
+                </div>
+                <p id="nome-salvo" class="mt-4 text-white/80 text-lg font-medium hidden">
+                    Personalizado para: <span id="nome-display" class="text-pink-300 font-semibold"></span> 💖
+                </p>
+            </div>
+        </div>
+
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/70">
+            <span class="text-sm tracking-widest">Role para baixo</span>
+            <i class="fa-solid fa-chevron-down animate-bounce text-3xl"></i>
+        </div>
+    </section>
+
+    <!-- Seção Mensagem Automática -->
+    <section id="mensagem-auto" class="py-24 bg-white">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="inline-block px-6 py-2 bg-purple-100 text-purple-700 rounded-full text-sm font-medium mb-4">SURPRESA AUTOMÁTICA</span>
+                <h2 class="text-5xl title-font font-bold text-gray-900 mb-4">Mensagem Automática</h2>
+                <p class="text-xl text-gray-600 max-w-md mx-auto">
+                    Clique no botão e receba uma mensagem linda e única para ela!
+                </p>
+            </div>
+
+            <div class="flex justify-center mb-12">
+                <button onclick="gerarMensagemAutomatica()" 
+                        class="group relative px-12 py-8 bg-gradient-to-r from-purple-600 to-pink-600 text-white text-2xl font-semibold rounded-3xl shadow-xl hover:shadow-2xl transition-all flex items-center gap-4 overflow-hidden">
+                    <span class="group-active:rotate-12 transition-transform">🌟</span>
+                    GERAR MENSAGEM MÁGICA
+                    <i class="fa-solid fa-sparkles group-active:scale-125 transition-transform"></i>
+                </button>
+            </div>
+
+            <div id="mensagem-auto-display" class="hidden message-card rounded-3xl p-12 shadow-inner text-center min-h-[280px] flex items-center justify-center">
+                <div>
+                    <p id="mensagem-texto" class="text-2xl leading-relaxed text-purple-800 font-medium italic"></p>
+                    <div class="mt-8 flex justify-center">
+                        <button onclick="copiarMensagem()" 
+                                class="px-8 py-3 bg-white hover:bg-purple-50 text-purple-700 rounded-2xl flex items-center gap-2 text-sm font-medium border border-purple-200">
+                            <i class="fa-solid fa-copy"></i>
+                            Copiar mensagem
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção Mensagem Personalizada -->
+    <section id="mensagem-personalizada" class="py-24 bg-gradient-to-br from-purple-50 to-pink-50">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="inline-block px-6 py-2 bg-pink-100 text-pink-700 rounded-full text-sm font-medium mb-4">DO SEU CORAÇÃO</span>
+                <h2 class="text-5xl title-font font-bold text-gray-900 mb-4">Escreva sua própria mensagem</h2>
+                <p class="text-xl text-gray-600">Personalize, crie um cartão virtual e envie para ela!</p>
+            </div>
+
+            <div class="bg-white rounded-3xl shadow-xl p-10 max-w-2xl mx-auto">
+                <div class="space-y-8">
+                    <!-- Destinatário -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-500 mb-2">Para quem é a mensagem?</label>
+                        <input id="destinatario" 
+                               type="text" 
+                               placeholder="Nome dela"
+                               class="w-full px-6 py-5 border border-purple-200 focus:border-purple-400 rounded-2xl text-xl focus:outline-none">
+                    </div>
+                    
+                    <!-- Mensagem -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-500 mb-2">Sua mensagem especial</label>
+                        <textarea id="mensagem-custom" 
+                                  rows="6"
+                                  placeholder="Escreva aqui o que você sente por ela..."
+                                  class="w-full px-6 py-5 border border-purple-200 focus:border-purple-400 rounded-3xl text-lg resize-none focus:outline-none"></textarea>
+                    </div>
+                    
+                    <button onclick="criarCartaoVirtual()" 
+                            class="w-full py-7 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white text-2xl font-semibold rounded-3xl shadow-lg transition-all active:scale-[0.98]">
+                        ✨ CRIAR CARTÃO VIRTUAL ✨
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção Música -->
+    <section id="musica" class="py-24 bg-white">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="inline-block px-6 py-2 bg-amber-100 text-amber-700 rounded-full text-sm font-medium mb-4">TRILHA SONORA ESPECIAL</span>
+                <h2 class="text-5xl title-font font-bold text-gray-900 mb-4">Ouça e sinta a energia</h2>
+                <p class="text-xl text-gray-600">Músicas que celebram a força e a beleza feminina</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Beyoncé -->
+                <div class="bg-gradient-to-br from-purple-900 to-pink-900 text-white rounded-3xl overflow-hidden shadow-2xl">
+                    <div class="p-10">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center text-4xl">👑</div>
+                            <div>
+                                <h3 class="text-3xl font-bold">Beyoncé</h3>
+                                <p class="text-pink-300">Run the World (Girls)</p>
+                            </div>
+                        </div>
+                        
+                        <div class="aspect-video rounded-2xl overflow-hidden mb-8 bg-black">
+                            <iframe width="100%" height="100%" 
+                                    src="https://www.youtube.com/embed/VBmMU_iwe6U" 
+                                    title="Beyoncé - Run the World (Girls)" 
+                                    frameborder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                    allowfullscreen></iframe>
+                        </div>
+                        
+                        <div class="flex gap-4">
+                            <a href="https://open.spotify.com/track/1uXbwHHfgsXcUKfSZw5ZJ0" 
+                               target="_blank"
+                               class="flex-1 bg-white/10 hover:bg-white/20 transition-colors py-4 rounded-2xl flex items-center justify-center gap-3 text-sm font-medium">
+                                <i class="fa-brands fa-spotify text-2xl"></i>
+                                <span>Ouvir no Spotify</span>
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=VBmMU_iwe6U" 
+                               target="_blank"
+                               class="flex-1 bg-white/10 hover:bg-white/20 transition-colors py-4 rounded-2xl flex items-center justify-center gap-3 text-sm font-medium">
+                                <i class="fa-brands fa-youtube text-2xl"></i>
+                                <span>Ver no YouTube</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Alicia Keys -->
+                <div class="bg-gradient-to-br from-rose-900 to-orange-900 text-white rounded-3xl overflow-hidden shadow-2xl">
+                    <div class="p-10">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center text-4xl">🔥</div>
+                            <div>
+                                <h3 class="text-3xl font-bold">Alicia Keys</h3>
+                                <p class="text-orange-300">Girl on Fire</p>
+                            </div>
+                        </div>
+                        
+                        <div class="aspect-video rounded-2xl overflow-hidden mb-8 bg-black">
+                            <iframe width="100%" height="100%" 
+                                    src="https://www.youtube.com/embed/J91ti_MpdHA" 
+                                    title="Alicia Keys - Girl on Fire" 
+                                    frameborder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                    allowfullscreen></iframe>
+                        </div>
+                        
+                        <div class="flex gap-4">
+                            <a href="https://open.spotify.com/track/4esOae7i4rqTbAu9o5Pxco" 
+                               target="_blank"
+                               class="flex-1 bg-white/10 hover:bg-white/20 transition-colors py-4 rounded-2xl flex items-center justify-center gap-3 text-sm font-medium">
+                                <i class="fa-brands fa-spotify text-2xl"></i>
+                                <span>Ouvir no Spotify</span>
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=J91ti_MpdHA" 
+                               target="_blank"
+                               class="flex-1 bg-white/10 hover:bg-white/20 transition-colors py-4 rounded-2xl flex items-center justify-center gap-3 text-sm font-medium">
+                                <i class="fa-brands fa-youtube text-2xl"></i>
+                                <span>Ver no YouTube</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-12 text-sm text-gray-500">
+                <p>💡 Dica: Coloque o volume alto e dance com ela! 🎶</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-purple-950 text-white py-16">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <div class="flex justify-center gap-8 text-4xl mb-8">
+                <span>🌷</span>
+                <span>💜</span>
+                <span>🌸</span>
+            </div>
+            <p class="text-2xl font-medium mb-2">Feito com muito carinho</p>
+            <p class="text-purple-300">para celebrar todas as mulheres incríveis do mundo</p>
+        </div>
+    </footer>
+
+    <!-- Modal Cartão Virtual -->
+    <div id="modal-cartao" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[100] p-6">
+        <div class="bg-white rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl">
+            <!-- Header do cartão -->
+            <div class="bg-gradient-to-r from-purple-600 to-pink-600 py-6 text-center text-white">
+                <div class="flex justify-center mb-3">
+                    <span class="text-5xl">💌</span>
+                </div>
+                <h3 class="text-3xl title-font">Cartão Especial</h3>
+                <p class="text-white/80 text-sm mt-1">Dia Internacional da Mulher 2026</p>
+            </div>
+            
+            <!-- Conteúdo -->
+            <div class="p-10 text-center">
+                <p id="modal-destinatario" class="text-3xl font-semibold text-purple-700 mb-8"></p>
+                
+                <div class="message-card p-10 rounded-3xl min-h-[200px] flex items-center justify-center mb-10">
+                    <p id="modal-mensagem" class="text-xl leading-relaxed text-gray-700 italic"></p>
+                </div>
+                
+                <div class="flex flex-col gap-3">
+                    <button onclick="copiarCartao()" 
+                            class="w-full py-4 border-2 border-purple-200 hover:border-purple-400 text-purple-700 rounded-2xl font-medium flex items-center justify-center gap-3">
+                        <i class="fa-solid fa-copy"></i>
+                        Copiar texto para enviar
+                    </button>
+                    
+                    <a id="whatsapp-btn" href="#" target="_blank"
+                       class="w-full py-4 bg-green-500 hover:bg-green-600 text-white rounded-2xl font-medium flex items-center justify-center gap-3 transition-colors">
+                        <i class="fa-brands fa-whatsapp text-2xl"></i>
+                        Enviar por WhatsApp
+                    </a>
+                    
+                    <button onclick="fecharModal()" 
+                            class="w-full py-4 text-gray-500 hover:text-gray-700 font-medium">
+                        Fechar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tailwind script já carregado
+        function initTailwind() {
+            // Nada necessário, Tailwind CDN já aplica
+        }
+        
+        let nomeEspecial = "";
+        
+        function salvarNome() {
+            const input = document.getElementById("nome-input");
+            nomeEspecial = input.value.trim();
+            
+            if (!nomeEspecial) {
+                alert("Por favor, digite o nome dela ❤️");
+                return;
+            }
+            
+            document.getElementById("nome-salvo").classList.remove("hidden");
+            document.getElementById("nome-display").textContent = nomeEspecial;
+            
+            // Scroll suave para próxima seção
+            setTimeout(() => {
+                document.getElementById("mensagem-auto").scrollIntoView({ behavior: "smooth" });
+            }, 800);
+        }
+        
+        // Mensagens automáticas
+        const mensagens = [
+            "Querida {nome}, você é uma força da natureza! Sua luz, coragem e amor inspiram todas as pessoas ao seu redor. Feliz Dia Internacional da Mulher! 🌟",
+            "{nome}, hoje o mundo celebra você. Mulheres como você transformam o impossível em realidade todos os dias. Seja sempre essa versão incrível! 💜",
+            "Feliz Dia das Mulheres, {nome}! Que sua vida seja repleta de conquistas, sorrisos e muito empoderamento. Você merece o mundo inteiro! 🌍",
+            "{nome}, você não é apenas uma mulher... você é um exemplo de resiliência, inteligência e beleza. Obrigada por existir! ✨",
+            "Para a mulher mais especial da minha vida: {nome}. Obrigada por ser forte quando preciso, carinhosa quando quero e incrível sempre. Te amo! ❤️",
+            "{nome}, no Dia Internacional da Mulher, eu celebro sua história, suas lutas vencidas e seus sonhos que ainda vão realizar. Você é poderosa! 🔥",
+            "Feliz 8 de Março, {nome}! Que você continue brilhando, conquistando e sendo essa mulher maravilhosa que ilumina o meu dia todos os dias. 🌸",
+            "{nome}, você é prova viva de que as mulheres movem o mundo. Continue sendo essa inspiração para todos nós! 💪"
+        ];
+        
+        function gerarMensagemAutomatica() {
+            if (!nomeEspecial) {
+                alert("Primeiro digite o nome dela no topo da página 💖");
+                document.getElementById("nome-input").focus();
+                return;
+            }
+            
+            const randomIndex = Math.floor(Math.random() * mensagens.length);
+            let mensagem = mensagens[randomIndex].replace("{nome}", nomeEspecial);
+            
+            const display = document.getElementById("mensagem-auto-display");
+            const texto = document.getElementById("mensagem-texto");
+            
+            texto.textContent = mensagem;
+            display.classList.remove("hidden");
+            
+            // Confetti simples
+            criarConfetti();
+        }
+        
+        function criarConfetti() {
+            const colors = ['#c026d3', '#ec4899', '#a855f7', '#f472b6'];
+            
+            for (let i = 0; i < 80; i++) {
+                const confetti = document.createElement("div");
+                confetti.className = "confetti";
+                confetti.style.left = Math.random() * 100 + "vw";
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = Math.random() * 12 + 6 + "px";
+                confetti.style.height = confetti.style.width;
+                confetti.style.animationDuration = Math.random() * 3 + 3 + "s";
+                confetti.style.opacity = Math.random() * 0.8 + 0.4;
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => {
+                    confetti.remove();
+                }, 6000);
+            }
+        }
+        
+        function copiarMensagem() {
+            const texto = document.getElementById("mensagem-texto").textContent;
+            navigator.clipboard.writeText(texto).then(() => {
+                const btn = event.currentTarget;
+                const original = btn.innerHTML;
+                btn.innerHTML = `<i class="fa-solid fa-check"></i> Copiado!`;
+                setTimeout(() => btn.innerHTML = original, 2000);
+            });
+        }
+        
+        function criarCartaoVirtual() {
+            const destinatario = document.getElementById("destinatario").value.trim() || nomeEspecial || "Mulher Incrível";
+            const mensagem = document.getElementById("mensagem-custom").value.trim();
+            
+            if (!mensagem) {
+                alert("Escreva uma mensagem linda antes de criar o cartão ❤️");
+                return;
+            }
+            
+            document.getElementById("modal-destinatario").innerHTML = `Para <span class="text-pink-500">${destinatario}</span>`;
+            document.getElementById("modal-mensagem").textContent = mensagem;
+            
+            // Link WhatsApp
+            const textoCompleto = `Feliz Dia Internacional da Mulher!\n\n${mensagem}\n\nCom muito carinho 💜`;
+            const whatsappLink = `https://wa.me/?text=${encodeURIComponent(textoCompleto)}`;
+            document.getElementById("whatsapp-btn").href = whatsappLink;
+            
+            document.getElementById("modal-cartao").classList.remove("hidden");
+            document.getElementById("modal-cartao").classList.add("flex");
+            
+            criarConfetti();
+        }
+        
+        function copiarCartao() {
+            const destinatario = document.getElementById("modal-destinatario").textContent;
+            const mensagem = document.getElementById("modal-mensagem").textContent;
+            const texto = `${destinatario}\n\n${mensagem}\n\nFeliz Dia das Mulheres 💜`;
+            
+            navigator.clipboard.writeText(texto).then(() => {
+                alert("✅ Cartão copiado! Agora é só colar no WhatsApp, Instagram ou onde quiser.");
+            });
+        }
+        
+        function fecharModal() {
+            const modal = document.getElementById("modal-cartao");
+            modal.classList.add("hidden");
+            modal.classList.remove("flex");
+        }
+        
+        // Fechar modal com ESC
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") {
+                fecharModal();
+            }
+        });
+        
+        // Inicialização
+        window.onload = function() {
+            console.log("%c🎉 Projeto Dia das Mulheres carregado com sucesso! 💜", "color:#c026d3; font-size:14px; font-weight:bold");
+            
+            // Sugestão de nome caso esteja vazio
+            setTimeout(() => {
+                const input = document.getElementById("nome-input");
+                if (!input.value) {
+                    input.placeholder = "Ex: Maria, Ana, Joana...";
+                }
+            }, 2500);
+        };
+    </script>
+</body>
+</html>
